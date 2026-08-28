@@ -1,40 +1,712 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed — Ingénieur Commercial</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camille Duval — Ingénieur·e Commercial·e</title>
+<meta name="description" content="Portfolio de Camille Duval, ingénieur·e commercial·e spécialisé·e dans la vente de solutions techniques complexes.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2312203B'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23E1962B' font-family='sans-serif'%3E%E2%97%86%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 
+<!--
+  ============================================================
+  À PERSONNALISER avant publication :
+  1. Remplacez "Camille Duval" par le nom réel (recherchez/remplacez).
+  2. Section HERO : accroche + sous-titre.
+  3. Section COMPÉTENCES : ajustez les 3 catégories et items.
+  4. Section RÉSULTATS : remplacez les chiffres par les vrais indicateurs
+     (ou retirez la section si les chiffres ne sont pas disponibles).
+  5. Section CONTACT : adresse e-mail, lien LinkedIn, ville.
+  6. Couleurs : variables CSS dans :root, tout en haut du <style>.
+  ============================================================
+-->
+
+<style>
+  :root{
+    --ink: #12203B;
+    --ink-soft: #1C2E52;
+    --paper: #F6F3EC;
+    --paper-dim: #ECE6D8;
+    --amber: #E1962B;
+    --amber-deep: #C97D1D;
+    --slate: #56606E;
+    --slate-on-dark: #AEB8CC;
+    --success: #2F6E4F;
+    --line: rgba(18,32,59,0.12);
+    --line-on-dark: rgba(246,243,236,0.16);
+    --radius: 14px;
+    --max: 1040px;
+    --ease: cubic-bezier(.22,.68,0,1);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .eyebrow, .kpi-value, nav{
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+
+  a{ color: inherit; }
+
+  .wrap{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- Pipeline nav (signature element) ---------- */
+  .pipeline-nav{
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(246,243,236,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .pipeline-inner{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 60px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .pipeline-inner::-webkit-scrollbar{ display: none; }
+
+  .pipeline-track{
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 480px;
+    height: 100%;
+  }
+  .pipeline-line{
+    position: absolute;
+    left: 14px; right: 14px;
+    top: 50%;
+    height: 2px;
+    background: var(--line);
+    transform: translateY(-50%);
+  }
+  .pipeline-fill{
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    height: 2px;
+    width: 0%;
+    background: var(--amber);
+    transform: translateY(-50%);
+    transition: width .15s linear;
+  }
+  .stage{
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 2px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--slate);
+  }
+  .stage-dot{
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    transition: all .25s var(--ease);
+  }
+  .stage.is-active .stage-dot{
+    background: var(--amber);
+    border-color: var(--amber);
+    box-shadow: 0 0 0 4px rgba(225,150,43,0.18);
+  }
+  .stage.is-active{ color: var(--ink); font-weight: 600; }
+  .stage-label{ white-space: nowrap; }
+  @media (max-width: 640px){
+    .stage-label{ display: none; }
+    .pipeline-track{ min-width: 220px; }
+  }
+
+  .brand{
+    font-weight: 700;
+    font-size: 15px;
+    white-space: nowrap;
+    padding-right: 16px;
+    border-right: 1px solid var(--line);
+    margin-right: 12px;
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .7s var(--ease), transform .7s var(--ease);
+  }
+  .reveal.is-visible{ opacity: 1; transform: none; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background: var(--ink);
+    color: var(--paper);
+    padding: 96px 0 110px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after{
+    content:"";
+    position: absolute;
+    right: -120px; top: -120px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(225,150,43,0.16), transparent 70%);
+  }
+  .eyebrow{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 600;
+    margin-bottom: 22px;
+  }
+  .eyebrow::before{
+    content:"";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--amber);
+  }
+  .hero h1{
+    font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+    line-height: 1.12;
+    font-weight: 700;
+    margin: 0 0 22px;
+    max-width: 780px;
+  }
+  .hero h1 em{
+    font-style: normal;
+    color: var(--amber);
+  }
+  .hero p.lede{
+    font-family: 'Lora', serif;
+    font-size: 1.15rem;
+    color: var(--slate-on-dark);
+    max-width: 560px;
+    margin: 0 0 38px;
+  }
+  .cta-row{ display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 14.5px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform .2s var(--ease), background .2s, border-color .2s;
+  }
+  .btn-primary{
+    background: var(--amber);
+    color: var(--ink);
+  }
+  .btn-primary:hover{ background: var(--amber-deep); transform: translateY(-2px); }
+  .btn-ghost{
+    background: transparent;
+    border-color: var(--line-on-dark);
+    color: var(--paper);
+  }
+  .btn-ghost:hover{ border-color: var(--amber); color: var(--amber); transform: translateY(-2px); }
+
+  /* ---------- Sections generic ---------- */
+  section{ padding: 88px 0; }
+  .section-head{ max-width: 640px; margin-bottom: 48px; }
+  .section-head .eyebrow{ color: var(--amber-deep); }
+  .section-head h2{
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    margin: 0 0 14px;
+    font-weight: 700;
+  }
+  .section-head p{ color: var(--slate); margin: 0; }
+
+  /* ---------- Approche ---------- */
+  .approach{ background: var(--paper-dim); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .principles{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .principle{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+  }
+  .principle .stage-tag{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--amber-deep);
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .principle h3{
+    font-size: 1.08rem;
+    margin: 0 0 10px;
+  }
+  .principle p{ color: var(--slate); margin: 0; font-size: 0.97rem; }
+  @media (max-width: 800px){ .principles{ grid-template-columns: 1fr; } }
+
+  /* ---------- Parcours ---------- */
+  .timeline{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 44px;
+  }
+  .tl-item{
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 24px;
+  }
+  .tl-marker{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .tl-dot{
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--amber-deep);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .tl-item.is-current .tl-dot{
+    background: var(--amber);
+    border-color: var(--amber);
+    box-shadow: 0 0 0 4px rgba(225,150,43,0.18);
+  }
+  .tl-line{
+    width: 2px;
+    flex: 1;
+    background: var(--line);
+    margin-top: 2px;
+  }
+  .tl-content{ padding-bottom: 36px; }
+  .tl-date{
+    font-size: 12px;
+    color: var(--amber-deep);
+    letter-spacing: 0.03em;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .tl-content h3{
+    font-size: 1.08rem;
+    margin: 0 0 4px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .tl-org{
+    font-size: 0.88rem;
+    color: var(--slate);
+    margin: 0 0 10px;
+    font-style: italic;
+  }
+  .tl-content p:last-child{
+    margin: 0;
+    font-size: 0.96rem;
+    color: var(--ink-soft);
+  }
+
+  .parcours-stats{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .pstat{
+    background: var(--paper);
+    padding: 22px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .pstat-value{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .pstat-label{
+    font-size: 12.5px;
+    color: var(--slate);
+    line-height: 1.4;
+  }
+  @media (max-width: 800px){
+    .parcours-stats{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px){
+    .tl-item{ grid-template-columns: 20px 1fr; gap: 14px; }
+  }
+
+  /* ---------- Compétences ---------- */
+  .skills-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .skill-card{
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px 24px 24px;
+    transition: border-color .25s, transform .25s var(--ease);
+  }
+  .skill-card:hover{ border-color: var(--amber); transform: translateY(-4px); }
+  .skill-card h3{
+    font-size: 1.05rem;
+    margin: 0 0 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .skill-card .dot{
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--amber);
+    flex-shrink: 0;
+  }
+  .skill-card .sub{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--slate);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .skill-card ul{ margin: 0; padding: 0; list-style: none; }
+  .skill-card li{
+    padding: 8px 0;
+    border-top: 1px solid var(--line);
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+  }
+  .skill-card li:first-of-type{ border-top: none; }
+  @media (max-width: 800px){ .skills-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- Résultats ---------- */
+  .results{ background: var(--ink); color: var(--paper); }
+  .results .section-head p{ color: var(--slate-on-dark); }
+  .results .section-head .eyebrow{ color: var(--amber); }
+  .kpi-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line-on-dark);
+    border: 1px solid var(--line-on-dark);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .kpi{
+    background: var(--ink);
+    padding: 30px 22px;
+  }
+  .kpi-value{
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .kpi-label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--slate-on-dark);
+    line-height: 1.4;
+  }
+  .kpi-note{
+    margin-top: 20px;
+    font-size: 12.5px;
+    color: var(--slate-on-dark);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  @media (max-width: 800px){ .kpi-grid{ grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- Contact ---------- */
+  .contact{
+    text-align: center;
+    padding: 100px 0 110px;
+  }
+  .contact h2{
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin: 0 0 16px;
+  }
+  .contact p{ color: var(--slate); max-width: 480px; margin: 0 auto 34px; }
+  .contact .cta-row{ justify-content: center; }
+  .btn-primary.dark-ctx{ color: var(--ink); }
+
+  footer{
+    border-top: 1px solid var(--line);
+    padding: 26px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--slate);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+</style>
+</head>
 <body>
 
-    <h1>Mohamed</h1>
+<nav class="pipeline-nav" aria-label="Navigation du parcours">
+  <div class="pipeline-inner">
+    <span class="brand">CD.</span>
+    <div class="pipeline-track" role="tablist">
+      <div class="pipeline-line"></div>
+      <div class="pipeline-fill" id="pipelineFill"></div>
+      <button class="stage is-active" data-target="hero"><span class="stage-dot"></span><span class="stage-label">Découverte</span></button>
+      <button class="stage" data-target="parcours"><span class="stage-dot"></span><span class="stage-label">Qualification</span></button>
+      <button class="stage" data-target="approche"><span class="stage-dot"></span><span class="stage-label">Démonstration</span></button>
+      <button class="stage" data-target="competences"><span class="stage-dot"></span><span class="stage-label">Négociation</span></button>
+      <button class="stage" data-target="contact"><span class="stage-dot"></span><span class="stage-label">Signature</span></button>
+    </div>
+  </div>
+</nav>
 
-    <h2>Ingénieur Commercial</h2>
+<header class="hero" id="hero">
+  <div class="wrap">
+    <span class="eyebrow">Ingénieur·e Commercial·e — Jeune diplômé·e</span>
+    <h1>Formé·e sur le terrain, prêt·e à <em>porter le deal</em>.</h1>
+    <p class="lede">Camille Duval — deux ans d'alternance chez OVHcloud à vendre des solutions cloud à des interlocuteurs techniques, en parallèle d'une formation en école de commerce. Le diplôme en poche, la pratique déjà acquise.</p>
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-primary">Planifier un échange</a>
+      <a href="#parcours" class="btn btn-ghost">Voir le parcours ↓</a>
+    </div>
+  </div>
+</header>
 
-    <p>
-        Bienvenue sur mon portfolio professionnel.
-    </p>
+<section class="parcours reveal" id="parcours">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Parcours</span>
+      <h2>Une formation pensée pour le terrain</h2>
+      <p>Deux ans d'alternance ne sont pas une salle d'attente avant le premier vrai poste — c'est déjà le poste, avec un vrai portefeuille de comptes et de vrais objectifs.</p>
+    </div>
 
-    <h2>À propos</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-marker"><span class="tl-dot"></span><span class="tl-line"></span></div>
+        <div class="tl-content">
+          <span class="tl-date mono">2021 — 2023</span>
+          <h3>BTS Négociation et Digitalisation de la Relation Client</h3>
+          <p class="tl-org">[Nom de l'établissement], [Ville]</p>
+          <p>Bases de la vente B2B, techniques de négociation et gestion de la relation client — le socle avant la spécialisation technique.</p>
+        </div>
+      </div>
 
-    <p>
-        Je suis ingénieur commercial spécialisé dans le développement
-        commercial et la gestion de la relation client.
-    </p>
+      <div class="tl-item">
+        <div class="tl-marker"><span class="tl-dot"></span><span class="tl-line"></span></div>
+        <div class="tl-content">
+          <span class="tl-date mono">2023 — 2025</span>
+          <h3>Bachelor / Master Ingénieur d'Affaires — en alternance</h3>
+          <p class="tl-org">[Nom de l'école de commerce ou d'ingénieurs]</p>
+          <p>Spécialisation vente de solutions techniques : architecture d'offres, réponse à appels d'offres, négociation grands comptes.</p>
+        </div>
+      </div>
 
-    <h2>Expérience</h2>
+      <div class="tl-item is-current">
+        <div class="tl-marker"><span class="tl-dot"></span></div>
+        <div class="tl-content">
+          <span class="tl-date mono">2023 — Aujourd'hui</span>
+          <h3>Ingénieur·e Commercial·e en alternance — OVHcloud</h3>
+          <p class="tl-org">Rattaché·e à l'équipe commerciale [nom de l'équipe / segment]</p>
+          <p>Accompagnement de clients PME/ETI sur des offres d'infrastructure cloud, participation aux avant-ventes techniques aux côtés des équipes solutions, suivi et développement d'un portefeuille de comptes.</p>
+        </div>
+      </div>
+    </div>
 
-    <p>
-        Découvrez mon parcours professionnel, mes compétences
-        et mes réalisations.
-    </p>
+    <div class="parcours-stats">
+      <div class="pstat"><span class="pstat-value mono">2 ans</span><span class="pstat-label">d'expérience terrain chez OVHcloud</span></div>
+      <div class="pstat"><span class="pstat-value mono">[N]</span><span class="pstat-label">comptes suivis en portefeuille</span></div>
+      <div class="pstat"><span class="pstat-value mono">[N]</span><span class="pstat-label">avant-ventes accompagnées</span></div>
+      <div class="pstat"><span class="pstat-value mono">Cloud</span><span class="pstat-label">infrastructure &amp; hébergement</span></div>
+    </div>
+    <p class="kpi-note" style="color:var(--slate);">// [N] à remplacer par les chiffres réels de l'alternance</p>
+  </div>
+</section>
 
-    <h2>Contact</h2>
+<section class="approach reveal" id="approche">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Méthode</span>
+      <h2>Trois principes qui guident chaque cycle de vente</h2>
+      <p>Pas de discours produit récité. Une approche construite pour des cycles longs, des acheteurs techniques et des enjeux business réels.</p>
+    </div>
+    <div class="principles">
+      <div class="principle">
+        <span class="stage-tag">01 — AVANT LA DÉMO</span>
+        <h3>Écouter plus longtemps qu'on ne pense nécessaire</h3>
+        <p>Chaque besoin exprimé cache une contrainte non-dite — budget, politique interne, échéance. La qualifier avant de parler solution évite les cycles qui s'enlisent.</p>
+      </div>
+      <div class="principle">
+        <span class="stage-tag">02 — PENDANT L'ÉCHANGE</span>
+        <h3>Vendre la valeur, jamais la fiche technique</h3>
+        <p>Un CTO et un directeur achats n'entendent pas le même mot. Le rôle est de traduire une architecture en impact mesurable pour chaque interlocuteur.</p>
+      </div>
+      <div class="principle">
+        <span class="stage-tag">03 — APRÈS LA SIGNATURE</span>
+        <h3>Rester dans la boucle, pas seulement dans le CRM</h3>
+        <p>Un contrat signé est un début de relation, pas une fin de mission. Le suivi post-vente alimente le pipeline suivant plus sûrement qu'une prospection froide.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <p>
-        Vous pouvez me contacter pour échanger.
-    </p>
+<section class="skills reveal" id="competences">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Compétences</span>
+      <h2>Ce qui tient le poste ensemble</h2>
+      <p>Trois familles de compétences qui, prises séparément, ne suffisent pas — c'est leur combinaison qui fait la différence sur un cycle de vente technique.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3><span class="dot"></span>Expertise technique</h3>
+        <span class="sub">COMPRENDRE POUR CONVAINCRE</span>
+        <ul>
+          <li>Architecture et intégration de solutions</li>
+          <li>Vulgarisation de sujets techniques complexes</li>
+          <li>Rédaction de réponses à appels d'offres (RFP/RFI)</li>
+          <li>Veille produit et concurrentielle continue</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot"></span>Vente &amp; négociation</h3>
+        <span class="sub">STRUCTURER LE CYCLE</span>
+        <ul>
+          <li>Pilotage de cycles de vente B2B complexes</li>
+          <li>Construction et défense de business cases (ROI/TCO)</li>
+          <li>Négociation multi-parties prenantes</li>
+          <li>Forecast et gestion de pipeline (CRM)</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3><span class="dot"></span>Relation client</h3>
+        <span class="sub">FAIRE DURER LA CONFIANCE</span>
+        <ul>
+          <li>Gestion de comptes stratégiques</li>
+          <li>Co-construction de solutions avec le client</li>
+          <li>Coordination avant-vente / équipes produit</li>
+          <li>Fidélisation et développement de compte</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact reveal" id="contact">
+  <div class="wrap">
+    <span class="eyebrow" style="color:var(--amber-deep); justify-content:center;">Étape finale</span>
+    <h2>Prêt·e à en discuter ?</h2>
+    <p>Un besoin technique à qualifier, un projet à cadrer, ou simplement une opportunité à explorer — un e-mail suffit pour démarrer la conversation.</p>
+    <div class="cta-row">
+      <a href="mailto:camille.duval@example.com" class="btn btn-primary dark-ctx">camille.duval@example.com</a>
+      <a href="https://www.linkedin.com/in/votre-profil" class="btn btn-ghost" style="color:var(--ink); border-color:var(--line);">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>Camille Duval — Ingénieur·e Commercial·e</span>
+    <span>Tours, France</span>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReduced) {
+    revealEls.forEach(el => el.classList.add('is-visible'));
+  } else {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => revealObserver.observe(el));
+  }
+
+  // Pipeline nav: active stage + fill bar tied to scroll position
+  const stages = Array.from(document.querySelectorAll('.stage'));
+  const sections = stages.map(s => document.getElementById(s.dataset.target));
+  const fill = document.getElementById('pipelineFill');
+
+  stages.forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById(btn.dataset.target).scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth' });
+    });
+  });
+
+  function updatePipeline() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+    fill.style.width = progress + '%';
+
+    let activeIndex = 0;
+    sections.forEach((sec, i) => {
+      if (sec && sec.getBoundingClientRect().top <= window.innerHeight * 0.4) {
+        activeIndex = i;
+      }
+    });
+    stages.forEach((s, i) => s.classList.toggle('is-active', i === activeIndex));
+  }
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => { updatePipeline(); ticking = false; });
+      ticking = true;
+    }
+  });
+  updatePipeline();
+</script>
 
 </body>
 </html>
